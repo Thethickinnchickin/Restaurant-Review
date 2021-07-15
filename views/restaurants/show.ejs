@@ -1,0 +1,56 @@
+<% layout('./layouts/boilerplate') %> 
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <img src="<%=restaurant.image%>" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%=restaurant.title %></h5>
+                <p class="card-text"><%restaurant.description%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Location: <%=restaurant.location%> </li>
+                <li class="list-group-item">Cuisine: <%=restaurant.cuisine%></li>
+            </ul>
+            <div class="card-body">
+                <a class="btn btn-info mb-2" href="/restaurants/<%=restaurant._id%>/edit" class="card-link">Edit Restaurant</a>
+                <form action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <div class="card-body">
+                <a href="/restaurants">Back to Restaurants</a> 
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h3>Leave a review</h3>
+        <form action="/restaurants/<%=restaurant._id%>/reviews" class="validated-form" method="POST" novalidate>
+            <div class="mb-3">
+                <label for="body">Review</label>
+                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="10" required></textarea>
+                <div class="valid-feedback">
+                    Looks Great!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="rating">Rating</label>
+                <input type="range" class="form-range" min="1" max="5" id="rating" name="review[rating]">
+            </div>
+            <button class="mb-3 btn btn-success">Leave Reivew</button>
+        </form>
+        <% for(let review of restaurant.reviews) { %>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><%=restaurant.title%></h5>
+                <p>Review: <%=review.body%></p>
+                <p>Rating: <%=review.rating%></p>
+            </div>
+            <div class="card-body">
+                <form action="/restaurants/<%=restaurant._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
