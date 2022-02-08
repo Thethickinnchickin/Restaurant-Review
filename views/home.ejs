@@ -4,9 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resurant Reviewer</title>
+    <title>Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
-<body>
-    <h1>Home! Yelp Camp!</h1>
+<body class="text-center text-white bg-dark">
+    <div class="cover-container w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="mb-0">RestaurantReview</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-right">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a href="/restaurants" class="nav-link">Restaurants</a>
+                    <% if(!user) { %> 
+                    <a href="/users/login" class="nav-link">Login</a>
+                    <a href="/users/register" class="nav-link">Register</a>
+                    <% } else { %> 
+                    <a href="/users/logout" class="nav-link">Logout</a>
+                    <% } %> 
+                </nav>
+            </div>
+        </header>
+        <main class="px-3">
+            <h1>RestaurantReview</h1>
+            <p class="lead">Welcome to Restaurant Review<br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ipsam, officiis eius minus nemo delectus nam optio repellendus dicta id quod nesciunt est eaque, sapiente perspiciatis saepe dolorum qui consequatur.
+                </p>
+            <a href="/restaurants" class="btn btn-lg btn-secondary font-weight-bold text-white">View Restaurants</a>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p class="footerMark">&copy; 2022 Restaurant Review</p>
+        </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+
 </body>
 </html>

@@ -1,4 +1,5 @@
 <% layout('./layouts/boilerplate') %> 
+    <div id="cluster-map"></div>
 
     <h1>Restuarants</h1>
     <div>
@@ -6,12 +7,16 @@
     </div>
     <div>
         <% for (let restaurant of restaurants) { %>
-           <div class="card">
+           <div class="card mb-3">
                <div class="row">
                    <div class="col-md-4">
-                       <img class="img-fluid" alt="" src="<%=restaurant.image %>">
+                       <% if(restaurant.images.length) {%> 
+                       <img class="img-fluid" alt="" src="<%=restaurant.images[0].url %>">
+                       <% } else { %>
+                            <img src="" alt="" class="img-fluid">
+                        <% } %> 
                    </div>
-                   <div class="col-mg-8">
+                   <div class="col-md-8">
                        <div class="card-body">
                            <h5><%=restaurant.title%></h5>
                            <p class="card-text"><%= restaurant.description %></p>
@@ -22,3 +27,10 @@
            </div>
         <% } %> 
     </div>
+
+    <script>
+        const mapBoxToken = 'pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog';
+        const restaurants = {features: <%- JSON.stringify(restaurants) %>}
+    </script>
+
+    <script src="/javascripts/clusterMap.js"></script>

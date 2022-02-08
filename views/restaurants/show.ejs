@@ -1,14 +1,36 @@
 <% layout('./layouts/boilerplate') %> 
+<link rel="stylesheet" href="/stylesheets/stars.css">
 <div class="row">
     <div class="col-6">
-        <div class="card">
-            <img src="<%=restaurant.image%>" class="card-img-top" alt="...">
+     
+        
+
+        <div id="restaurantCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <% restaurant.images.forEach((img, i) => { %> 
+              <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                <img src="<%= img.url  %>" class="d-block w-100" alt="">
+              </div>
+              <% }) %> 
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#restaurantCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#restaurantCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+        <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title"><%=restaurant.title %></h5>
                 <p class="card-text"><%restaurant.description%></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Location: <%=restaurant.location%> </li>
+                <li class="list-group-item">Location: <%=restaurant.location %> </li>
                 <li class="list-group-item">Cuisine: <%=restaurant.cuisine%></li>
             </ul>
             <div class="card-body">
@@ -23,24 +45,41 @@
         </div>
     </div>
     <div class="col-6">
+        <div id="map" style="width: 800px; height: 300px;"></div>       
+    <% if(user) {%> 
         <h3>Leave a review</h3>
         <form action="/restaurants/<%=restaurant._id%>/reviews" class="validated-form" method="POST" novalidate>
+            
             <div class="mb-3">
+                <fieldset class="starability-basic">
+                    <legend>First rating:</legend>
+                    <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="rating" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="rating" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="rating" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="rating" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="rating" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
                 <label for="body">Review</label>
-                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="10" required></textarea>
+                <textarea class="form-control" name="body" id="body" cols="30" rows="10" required></textarea>
                 <div class="valid-feedback">
                     Looks Great!
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="rating">Rating</label>
-                <input type="range" class="form-range" min="1" max="5" id="rating" name="review[rating]">
-            </div>
             <button class="mb-3 btn btn-success">Leave Reivew</button>
         </form>
+    <% } %> 
         <% for(let review of restaurant.reviews) { %>
         <div class="card mb-3">
             <div class="card-body">
+                <h3 class="card-body">Posted By: <%= review.author.username %></h3>
+                <h3>Rated element name</h3>
+                <p class="starability-result" data-rating=<%= review.rating%>></p>
                 <h5 class="card-title"><%=restaurant.title%></h5>
                 <p>Review: <%=review.body%></p>
                 <p>Rating: <%=review.rating%></p>
@@ -54,3 +93,10 @@
         <% } %>
     </div>
 </div>
+
+<script>
+    const mapToken = 'pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog';
+    const restaurant = <%-JSON.stringify(restaurant) %> 
+</script>
+
+<script src="/javascripts/showPageMap.js"></script>

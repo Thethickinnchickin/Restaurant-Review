@@ -2,21 +2,56 @@ const mongoose = require('mongoose');
 const review = require('./review');
 const Schema = mongoose.Schema;
 
+//Creating Image Schema 
+
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+ImageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/w_200');
+})
+
+const opts = {toJSON: {virtuals: true}};
+
+// Creating the Restaurant Model
+
 const RestaurantSchema = new Schema({
     title: String,
-    image: String,
+    images: [ImageSchema],
     description: String,
+    geometry: {
+        type : {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates : {
+            type: [Number],
+            required: true
+        }
+    },
     location: String,
     cuisine: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
     ]
-});
+}, opts);
 
-RestaurantSchema.post('findOneAndDelete', async function() {
+RestaurantSchema.virtual('properties.popUpMarkup').get(function () {
+    return `<strong><a href="/restaurants/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>`
+})
+
+RestaurantSchema.post('findOneAndDelete', async function(doc) {
     if (doc) {
         await review.remove({
             _id: {
