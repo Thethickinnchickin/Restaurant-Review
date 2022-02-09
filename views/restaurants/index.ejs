@@ -1,7 +1,7 @@
 <% layout('./layouts/boilerplate') %> 
     <div id="cluster-map"></div>
 
-    <h1>Restuarants</h1>
+    <h1 style="color: aliceblue;">Restuarants</h1>
     <% if(user) { %> 
     <div>
         <a class="btn btn-warning mb-3" href="/restaurants/new">+Add Restaurant</a>
@@ -9,11 +9,11 @@
     <% } %> 
     <div>
         <% for (let restaurant of restaurants) { %>
-           <div class="card mb-3">
+           <div class="card mb-3" style="border-radius: 5%;">
                <div class="row">
                    <div class="col-md-4">
                        <% if(restaurant.images.length) {%> 
-                       <img class="img-fluid" alt="" src="<%=restaurant.images[0].url %>">
+                       <img style="border-radius: 5%;" class="img-fluid" alt="" src="<%=restaurant.images[0].url %>">
                        <% } else { %>
                             <img src="" alt="" class="img-fluid">
                         <% } %> 

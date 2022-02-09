@@ -67,3 +67,19 @@ module.exports.places = [
     'Cliffs Dinner',
     'Hollow House'
 ]
+
+module.exports.images = [
+    'bar-stock_ecq8nv.jpg',
+    'depositphotos_3863502-stock-photo-outdoor-restaurant-at-the-beach_nci1za.webp',
+    '348s_wwoprh.jpg',
+    '35465337-buffet-restaurant-das-hotelrestaurant_jud83o.webp',
+    'pizzeria-restaurant-with-italian-flag-rome-lazio-italy-H5HY31_fawdln.jpg',
+    'cafe-3537801__480_qix9az.jpg',
+    'Clayton_400x_jo9dih.jpg',
+    'Renee-Suen-TL-July-2021-Stock-Bar-ROOFTOP-10_edfpaq.jpg',
+    'istockphoto-1290237592-170667a_dbkm17.jpg',
+    'photo-1523368749929-6b2bf370dbf8_jmxs0t.jpg',
+    'istock-516329534-1_welh9i.jpg',
+    'Renee-Suen-TL-July-2021-Stock-Bar-ROOFTOP-1_ijxkfs.jpg',
+    'pexels-photo_m7pkct.jpg'
+]

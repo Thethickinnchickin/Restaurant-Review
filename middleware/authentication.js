@@ -7,4 +7,5 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
-//Middlewear Checking if the request was sent by a user that has been authenticated and logged in 
+//Middlewear Checking if the request was sent by a user that has been authenticated and logged in
+

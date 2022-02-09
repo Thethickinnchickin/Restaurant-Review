@@ -1,6 +1,6 @@
     //Obtaining the Map Box token from account
     
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog'
+    mapboxgl.accessToken = process.env.MAPBOX_TOKEN
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',

@@ -17,12 +17,31 @@ const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const mongoSanitze = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoStore = require("connect-mongo")
+
+
 
 //Adding in body parser to produce better json requests
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const dbUrl = process.env.dbURL
+
+
+const store = new MongoStore ({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: process.env.SECRET
+    }
+})
+
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR");
+})
+
 //Adding session to express
 app.use(session({
+    store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
@@ -37,11 +56,9 @@ app.use(session({
 app.use(express.static(path.join(__dirname,"public")));
 
 //Connecting flash
-
 app.use(flash());
 
 //Adding Helmet and updating CSP
-
 app.use(helmet({ crossOriginEmbedderPolicy: false }));
 
 const scriptSrcUrls = [
@@ -93,6 +110,14 @@ app.use(
     })
 );
 
+//Middlewear for redirecting over login
+// app.use((req, res, next) => {
+//     if(!["/login", "/register"].includes(req.originalUrl)) {
+//         req.session.returnTo = req.originalUrl;
+//     }
+//     next();
+// })
+
 //Creating a returnTo varible to be able to go back to previous page after login
 
 app.use((req, res, next) => {
@@ -103,7 +128,7 @@ app.use((req, res, next) => {
 
 //Connecting to the DataBase
 
-mongoose.connect('mongodb+srv://appuser:TomBrady12@restaurant-review.iqjbz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

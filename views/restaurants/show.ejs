@@ -2,10 +2,7 @@
 <link rel="stylesheet" href="/stylesheets/stars.css">
 <div class="row">
     <div class="col-6">
-     
-        
-
-        <div id="restaurantCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div style="border-radius: 50%;" id="restaurantCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <% restaurant.images.forEach((img, i) => { %> 
               <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
@@ -27,7 +24,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title"><%=restaurant.title %></h5>
-                <p class="card-text"><%restaurant.description%></p>
+                <p class="card-text"><%=restaurant.description%></p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Location: <%=restaurant.location %> </li>
@@ -35,9 +32,9 @@
             </ul>
             <% if(owner) { %> 
             <div class="card-body">
-                <a class="btn btn-info mb-2" href="/restaurants/<%=restaurant._id%>/edit" class="card-link">Edit Restaurant</a>
+                <a class="btn btn-outline-info mb-2" href="/restaurants/<%=restaurant._id%>/edit" class="card-link">Edit Restaurant</a>
                 <form action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-outline-danger">Delete</button>
                 </form>
             </div>
             <% } %> 
@@ -49,12 +46,12 @@
     <div class="col-6">
         <div id="map" style="width: 100%; margin-bottom: 10px; height: 300px;"></div>       
     <% if(user) {%> 
-        <h3>Leave a review</h3>
+        <h3 style="color: white;">Leave a review</h3>
         <form action="/restaurants/<%=restaurant._id%>/reviews" class="validated-form" method="POST" novalidate>
             
             <div class="mb-3">
                 <fieldset class="starability-basic">
-                    <legend>First rating:</legend>
+                    <legend style="color: white;">First rating:</legend>
                     <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
                     <input type="radio" id="first-rate1" name="rating" value="1" />
                     <label for="first-rate1" title="Terrible">1 star</label>
@@ -67,21 +64,23 @@
                     <input type="radio" id="first-rate5" name="rating" value="5" />
                     <label for="first-rate5" title="Amazing">5 stars</label>
                   </fieldset>
-                <label for="body">Review</label>
-                <textarea class="form-control" name="body" id="body" cols="30" rows="10" required></textarea>
+                <label for="body"></label>
+                <textarea class="form-control" name="body" id="body" cols="30" rows="5" required></textarea>
                 <div class="valid-feedback">
                     Looks Great!
                 </div>
             </div>
-            <button class="mb-3 btn btn-success">Leave Reivew</button>
+            <button class="mb-3 btn" style="color: white; border-radius: 25% 0%; background-color: black;">Post Reivew</button>
         </form>
+    <% } else {%> 
+        <h3 style="color: white;">Reviews</h3>
     <% } %> 
         <% for(let review of restaurant.reviews) { %>
         <div class="card mb-3">
             <div class="card-body" style="height: auto;">
                 <p class="starability-result" data-rating=<%= review.rating%>></p>
-                <h3 class="card-body">Posted By: <%= review.author.username %></h3>
-                <p>Review: <%=review.body%></p>
+                <h4 class="card-body">By: <%= review.author.username %></h4>
+                <p class="card-body"><%=review.body%></p>
             </div>
             <% if(user) { %> 
             <div class="card-body">

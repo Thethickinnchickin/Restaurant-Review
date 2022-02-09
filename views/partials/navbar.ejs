@@ -2,32 +2,28 @@
     <div class="container-fluid">
       <i class="fab fa-affiliatetheme"></i>
       <a class="navbar-brand" href="/">Restaurant Review</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#expandMe" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <% if(user !== undefined && user !== "") {%> 
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse" id="expandMe">
+        <% if(user !== undefined && user !== "") {%> 
         <div class="navbar-nav">
           <a class="nav-link active"  href="/">Home</a>
           <a class="nav-link" href="/restaurants">Restaurants</a>
           <a class="nav-link" href="/restaurants/new">Create Restaurant</a>
-        </div>
-        <div class="navbar-nav ml-auto">
           <a class="nav-link" href="/users/logout">Logout</a>                        
         </div>
-      </div>
-      <% }  else if((user === undefined || user === "") && onLoginPage && onLoginPage !==undefined){%>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-        <div class="navbar-nav">  
-        </div>            
-      </div>
-      <% } else { %>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav ml-auto">
-            <a class="nav-link" href="/users/login">Login</a>                        
-          </div>
+        <% }  else if((user === undefined || user === "") && onLoginPage && onLoginPage !==undefined){%>
+
+          <div class="navbar-nav">  
+          </div>            
+        <% } else { %>
+        <div class="navbar-nav">
+          <a class="nav-link" href="/users/login">Login</a>                        
         </div>
-       <% } %>   
+
+       <% } %> 
+      </div>  
     </div>
   </nav>
 
