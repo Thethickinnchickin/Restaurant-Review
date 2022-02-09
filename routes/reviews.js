@@ -16,7 +16,7 @@ router.post('/',isLoggedIn, ValidateReview, CatchAsync(async (req, res) => {
     const review = new Review({
         body: req.body.body,
         rating: req.body.rating,
-        author: req.user._id
+        author: req.user
     });
     restaurant.reviews.push(review);
     await review.save();

@@ -46,10 +46,14 @@ const RestaurantSchema = new Schema({
     ]
 }, opts);
 
+//Creating popUp in MapBox using virtual with restuarant schema
+
 RestaurantSchema.virtual('properties.popUpMarkup').get(function () {
     return `<strong><a href="/restaurants/${this._id}">${this.title}</a><strong>
     <p>${this.description.substring(0, 20)}...</p>`
 })
+
+//Creating cascading deletion when restaurant is deleted so the reviews associated are deleted as well
 
 RestaurantSchema.post('findOneAndDelete', async function(doc) {
     if (doc) {

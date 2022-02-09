@@ -33,19 +33,21 @@
                 <li class="list-group-item">Location: <%=restaurant.location %> </li>
                 <li class="list-group-item">Cuisine: <%=restaurant.cuisine%></li>
             </ul>
+            <% if(owner) { %> 
             <div class="card-body">
                 <a class="btn btn-info mb-2" href="/restaurants/<%=restaurant._id%>/edit" class="card-link">Edit Restaurant</a>
                 <form action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            <% } %> 
             <div class="card-body">
                 <a href="/restaurants">Back to Restaurants</a> 
             </div>
         </div>
     </div>
     <div class="col-6">
-        <div id="map" style="width: 800px; height: 300px;"></div>       
+        <div id="map" style="width: 100%; margin-bottom: 10px; height: 300px;"></div>       
     <% if(user) {%> 
         <h3>Leave a review</h3>
         <form action="/restaurants/<%=restaurant._id%>/reviews" class="validated-form" method="POST" novalidate>
@@ -76,23 +78,26 @@
     <% } %> 
         <% for(let review of restaurant.reviews) { %>
         <div class="card mb-3">
-            <div class="card-body">
-                <h3 class="card-body">Posted By: <%= review.author.username %></h3>
-                <h3>Rated element name</h3>
+            <div class="card-body" style="height: auto;">
                 <p class="starability-result" data-rating=<%= review.rating%>></p>
-                <h5 class="card-title"><%=restaurant.title%></h5>
+                <h3 class="card-body">Posted By: <%= review.author.username %></h3>
                 <p>Review: <%=review.body%></p>
-                <p>Rating: <%=review.rating%></p>
             </div>
+            <% if(user) { %> 
             <div class="card-body">
+                <% if(review.author._id.equals(user._id)) {%> 
                 <form action="/restaurants/<%=restaurant._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
+                <% } %> 
             </div>
+            <% } %> 
         </div>
         <% } %>
     </div>
 </div>
+
+<!-- Sending MapBox Token and restaurant to our show page main javascript file -->
 
 <script>
     const mapToken = 'pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog';

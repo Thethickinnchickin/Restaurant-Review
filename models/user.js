@@ -12,6 +12,8 @@ const UserSchema = new Schema({
     }
 });
 
+//Using passport-local-mongoose to create authentication 
+
 UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema);

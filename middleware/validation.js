@@ -3,6 +3,8 @@ const ExpressError = require('../utils/ExpressError');
 const Restaurant = require('../models/resturant');
 const Review = require('../models/review');
 
+//Checking if posted restaurant meet the custom validtors implemented with Joi
+
 module.exports.ValidateRestaurant = (req, res, next) => {
     const {error} = restaurantSchema.validate({
         title: req.body.title,
@@ -20,6 +22,8 @@ module.exports.ValidateRestaurant = (req, res, next) => {
         next();
     }
 }
+
+//Checking if posted review meet the custom validtors implemented with Joi
 
 module.exports.ValidateReview = (req, res, next) => {
     const {error} = reviewSchema.validate(req.body);
@@ -44,6 +48,19 @@ module.exports.isRestaurantAuthor = async(req, res, next) => {
     next();
 }
 
+//Checking if restaurant author is on it's own restaurants show page
+module.exports.restaurantOwnerEditAbility = async(req, res) => {
+    const {id} = req.params;
+    const restaurant = await Restaurant.findOne({_id: id});
+    if(!req.user) {
+        return false        
+    }
+    if(!restaurant.author.equals(req.user._id)) {
+        return false
+    }     
+    return true
+}
+
 //Checking to see if logged in user is the owner of a review
 
 module.exports.isReviewAuthor = async(req, res, next) => {
@@ -60,3 +77,5 @@ module.exports.isReviewAuthor = async(req, res, next) => {
 
     next();
 }
+
+

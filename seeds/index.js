@@ -25,16 +25,16 @@ const seedDB = async () => {
         const camp = new Campground({
             author: '61f9fa204100d4fa7a348ba1',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
-            title: `${sample(descriptors)} ${sample(places)}`,
+            title: `${sample(places)}`,
             cuisine: `${sample(cuisine)}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/mattreiley/image/upload/v1644269505/RestaurantReview/n4licvem9f7fzxrxdrf8.png',
-                    filename: 'RestaurantReview/t7xpjw77qfgs7djo95ci'
+                    url: 'https://res.cloudinary.com/mattreiley/image/upload/c_scale,r_30,w_600/v1644370711/RestaurantReview/bar-stock_ecq8nv.jpg',
+                    filename: 'RestaurantReview/bar-stock_ecq8nv.jpg'
                   },
                   {
-                    url: 'https://res.cloudinary.com/mattreiley/image/upload/v1644265622/RestaurantReview/sbxcxzqpri36vesfudwq.jpg',
-                    filename: 'RestaurantReview/gej6u35udwsxdrpfkbcy'
+                    url: 'https://res.cloudinary.com/mattreiley/image/upload/c_fill,h_300,r_30,w_600/v1644370711/RestaurantReview/depositphotos_3863502-stock-photo-outdoor-restaurant-at-the-beach_nci1za.webp',
+                    filename: 'RestaurantReview/depositphotos_3863502-stock-photo-outdoor-restaurant-at-the-beach_nci1za.webp'
                   }
             ],
             geometry: {

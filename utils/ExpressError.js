@@ -1,3 +1,5 @@
+//Layout for for creating an error in express
+
 class ExpressError extends Error {
     constructor(message, statusCode) {
         super();

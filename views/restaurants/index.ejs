@@ -2,9 +2,11 @@
     <div id="cluster-map"></div>
 
     <h1>Restuarants</h1>
+    <% if(user) { %> 
     <div>
-        <a class="btn btn-warning mb-3" href="/restaurants/new">New Campground</a>
+        <a class="btn btn-warning mb-3" href="/restaurants/new">+Add Restaurant</a>
     </div>
+    <% } %> 
     <div>
         <% for (let restaurant of restaurants) { %>
            <div class="card mb-3">
@@ -19,8 +21,9 @@
                    <div class="col-md-8">
                        <div class="card-body">
                            <h5><%=restaurant.title%></h5>
+                           <h6  style="color: #7c858d;"><%=restaurant.location %> </h6>
                            <p class="card-text"><%= restaurant.description %></p>
-                           <a class="btn btn-primary" href="/restaurants/<%=restaurant._id%>">-><%= restaurant.location %></a>
+                           <a class="btn btn-outline-dark" href="/restaurants/<%=restaurant._id%>">Visit <%= restaurant.title %></a>
                        </div>
                    </div>
                </div>

@@ -4,7 +4,7 @@ const Restaurant = require('../models/resturant');
 const CatchAsync = require('../utils/CatchAsync');
 const { storage, cloudinary } = require('../cloudinary');
 const {isLoggedIn} = require('../middleware/authentication');
-const {isRestaurantAuthor, ValidateRestaurant} = require('../middleware/validation');
+const {isRestaurantAuthor, ValidateRestaurant, restaurantOwnerEditAbility} = require('../middleware/validation');
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapBoxToken = "pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog";
 const geocoder = mbxGeocoding({accessToken: mapBoxToken});
@@ -28,32 +28,26 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('restaurants/new', {user: req.user, onLoginPage: false});
 });
 
-let a = (req, res, next) => {
-    let send = `<html>`;
-    for (let i = 0; i < 5; i++) {
-      send += `${i}`;
-    }
-    send += `</html>`;
-    res.send(send);
-    //res.download(filepath)
-  }
-  router.get('/faggot', [a]);
 
 //Route that gets an individual restaurant based on it's ID 
 
 router.get('/:id', CatchAsync(async (req, res) => {
     try {
+        const isOwner = await restaurantOwnerEditAbility(req, res);
         const restaurant = await Restaurant.findOne({_id: req.params.id}).populate({
             path: 'reviews',
             populate: {
                 path: 'author'
             }
-        }).exec();
+        })
+        const LoggedInUser = req.user;
+
+        
         if (!restaurant) {
             req.flash('error', 'No Restaurant Found');
-            return res.redirect('/restaurants', 200, {user: req.user});
+            return res.redirect('/restaurants', 200, {user: LoggedInUser});
         }
-        res.render('restaurants/show', {restaurant: restaurant, user: req.user, onLoginPage: false});
+        res.render('restaurants/show', {restaurant: restaurant, user: LoggedInUser, onLoginPage: false, owner: isOwner});
     } catch (err) {
         req.flash('error', 'No Restaurant Found');
         return res.redirect('/restaurants');
@@ -102,9 +96,14 @@ router.post('/', isLoggedIn, upload.array('images'), ValidateRestaurant, CatchAs
 
 //Route that edits a restaurant in the database using it's ID from the database
 
-router.put('/:id', isLoggedIn, isRestaurantAuthor, ValidateRestaurant, upload.array('images'), CatchAsync(async (req, res, next) => {
+router.put('/:id', isLoggedIn, upload.array('images'), isRestaurantAuthor, ValidateRestaurant, CatchAsync(async (req, res, next) => {
     const {id} = req.params;
-    const restaurant = await Restaurant.findByIdAndUpdate(id, {...req.body.restaurant});
+    const restaurant = await Restaurant.findByIdAndUpdate(id, {
+        title: req.body.title,
+        location: req.body.location,
+        description: req.body.description,
+        cuisine: req.body.cuisine,
+    });
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename}));
     restaurant.images.push(...imgs);
     await restaurant.save();
