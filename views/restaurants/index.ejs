@@ -32,7 +32,7 @@
     </div>
 
     <script>
-        const mapBoxToken = process.env.MAPBOX_TOKEN;
+        const mapBoxToken = "<%-process.env.MAPBOX_TOKEN%>";
         const restaurants = {features: <%- JSON.stringify(restaurants) %>}
     </script>
 

@@ -99,7 +99,7 @@
 <!-- Sending MapBox Token and restaurant to our show page main javascript file -->
 
 <script>
-    const mapBoxToken = process.env.MAPBOX_TOKEN;
+    const mapBoxToken = "<%-process.env.MAPBOX_TOKEN%>";
     const restaurant = <%-JSON.stringify(restaurant) %> 
 </script>
 
