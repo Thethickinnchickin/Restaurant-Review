@@ -23,14 +23,14 @@ const MongoStore = require("connect-mongo")
 //Adding in body parser to produce better json requests
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const dbUrl = process.env.dbURL
+const dbUrl = process.env.dbURL ;
 
 
 const store = new MongoStore ({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: process.env.SECRET
+        secret: 'secret'
     }
 })
 
@@ -41,7 +41,7 @@ store.on("error", function(e) {
 //Adding session to express
 app.use(session({
     store,
-    secret: process.env.SECRET,
+    secret: 'secret',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -187,5 +187,5 @@ app.use((err, req, res) => {
 //Starting up at on port 4000
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-    console.log(`Server running on port ${process.env.PORT}`);
+    console.log(`Server running on port ${port}`);
 })

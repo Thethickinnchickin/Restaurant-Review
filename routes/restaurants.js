@@ -6,7 +6,7 @@ const { storage, cloudinary } = require('../cloudinary');
 const {isLoggedIn} = require('../middleware/authentication');
 const {isRestaurantAuthor, ValidateRestaurant, restaurantOwnerEditAbility} = require('../middleware/validation');
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const mapBoxToken = "pk.eyJ1IjoibWF0dHJlaWxleSIsImEiOiJja2xib3ZseHMybmtzMm9wZWNrdTk0OG9kIn0.lb90yBKLnT1OL6tO1bkHog";
+const mapBoxToken = process.env.MapToken;
 const geocoder = mbxGeocoding({accessToken: mapBoxToken});
 const multer = require('multer');
 const upload = multer({storage});
@@ -18,8 +18,16 @@ const upload = multer({storage});
 //Route to get all Restaurants from DataBase
 
 router.get('/', CatchAsync(async(req, res) => {
-    const restaurants = await Restaurant.find({});
-    res.render('restaurants/index', {restaurants, user: req.user, onLoginPage: false});
+    try {
+        const restaurants = await Restaurant.find({});
+        console.log(restaurants)
+        res.render('restaurants/index', {restaurants, user: req.user, onLoginPage: false});
+    } catch(err)
+    {
+        console.log(err);
+    }
+    
+
 }));
 
 //Route to get creating of new reataurant page

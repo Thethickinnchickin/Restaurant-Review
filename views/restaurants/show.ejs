@@ -73,26 +73,28 @@
             <button class="mb-3 btn" style="color: white; border-radius: 25% 0%; background-color: black;">Post Reivew</button>
         </form>
     <% } else {%> 
-        <h3 style="color: white;">Reviews</h3>
+        <% if(restaurant.reviews.length > 0) { %>
+            <h3 style="color: white;">Reviews</h3>
+        <% } %>     
     <% } %> 
         <% for(let review of restaurant.reviews) { %>
-        <div class="card mb-3">
-            <div class="card-body" style="height: auto;">
-                <p class="starability-result" data-rating=<%= review.rating%>></p>
-                <h4 class="card-body">By: <%= review.author.username %></h4>
-                <p class="card-body"><%=review.body%></p>
-            </div>
-            <% if(user) { %> 
-            <div class="card-body">
-                <% if(review.author._id.equals(user._id)) {%> 
-                <form action="/restaurants/<%=restaurant._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+            <div class="card mb-3">
+                <div class="card-body" style="height: auto;">
+                    <p class="starability-result" data-rating=<%= review.rating%>></p>
+                    <h4 class="card-body">By: <%= review.author.username %></h4>
+                    <p class="card-body"><%=review.body%></p>
+                </div>
+                <% if(user) { %> 
+                <div class="card-body">
+                    <% if(review.author._id.equals(user._id)) {%> 
+                    <form action="/restaurants/<%=restaurant._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %> 
+                </div>
                 <% } %> 
             </div>
-            <% } %> 
-        </div>
-        <% } %>
+            <% } %>
     </div>
 </div>
 

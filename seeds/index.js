@@ -3,7 +3,7 @@ const cities = require('./cities');
 const { places, descriptors, cuisine, images } = require('./seedHelpers');
 const Campground = require('../models/resturant');
 
-mongoose.connect('mongodb+srv://appuser:TomBrady12@restaurant-review.iqjbz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+mongoose.connect(process.env.dbURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
